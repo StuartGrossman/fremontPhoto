@@ -243,6 +243,12 @@
     padding: 0.75rem 1rem;
     font-size: 0.9rem;
   }
+
+  .error-message,
+  .success-message {
+    margin: 0.75rem 0;
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -346,4 +352,22 @@
 .modal-btn.delete-btn:disabled {
   background: #fca5a5;
   cursor: not-allowed;
+}
+
+.error-message {
+  background-color: #fff5f5;
+  color: #e53e3e;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  background-color: #f0fff4;
+  color: #38a169;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
 } 

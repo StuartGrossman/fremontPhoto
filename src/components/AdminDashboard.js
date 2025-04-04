@@ -17,6 +17,8 @@ function AdminDashboard() {
   const [generating, setGenerating] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [qrToDelete, setQrToDelete] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
 
   useEffect(() => {
     if (!currentUser) {
@@ -97,6 +99,9 @@ function AdminDashboard() {
     if (!qrToDelete) return;
 
     setDeletingId(qrToDelete.id);
+    setDeleteError(null);
+    setDeleteSuccess(false);
+
     try {
       // Delete photos from Storage
       if (qrToDelete.photos && qrToDelete.photos.length > 0) {
@@ -112,12 +117,13 @@ function AdminDashboard() {
       
       // Update local state
       setQrCodes(prev => prev.filter(qr => qr.id !== qrToDelete.id));
+      setDeleteSuccess(true);
     } catch (err) {
       console.error('Error deleting QR code:', err);
       if (err.code === 'permission-denied') {
-        setError('Permission denied. Please check your Firestore rules.');
+        setDeleteError('Permission denied. Please check your Firestore rules.');
       } else {
-        setError('Failed to delete QR code');
+        setDeleteError('Failed to delete QR code. Please try again.');
       }
     } finally {
       setDeletingId(null);
@@ -257,6 +263,16 @@ function AdminDashboard() {
           <div className="modal">
             <h3>Confirm Delete</h3>
             <p>Are you sure you want to delete this QR code? This action cannot be undone.</p>
+            {deleteError && (
+              <div className="error-message">
+                {deleteError}
+              </div>
+            )}
+            {deleteSuccess && (
+              <div className="success-message">
+                QR code deleted successfully!
+              </div>
+            )}
             <div className="modal-actions">
               <button 
                 className="modal-btn cancel-btn"
