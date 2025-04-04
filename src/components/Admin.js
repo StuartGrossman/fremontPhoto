@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { QRCodeSVG } from 'qrcode.react';
 import { db } from '../firebase';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 import './Admin.css';
 
 const Admin = () => {
@@ -98,7 +99,7 @@ const Admin = () => {
           ) : (
             <div className="qr-grid">
               {qrCodes.map((qr) => (
-                <div key={qr.id} className="qr-item">
+                <Link to={`/qr/${qr.id}`} key={qr.id} className="qr-item">
                   <div className="qr-code">
                     <QRCodeSVG value={qr.data} size={150} />
                   </div>
@@ -107,8 +108,9 @@ const Admin = () => {
                     <p><strong>Data:</strong> {qr.data}</p>
                     <p><strong>Created:</strong> {new Date(qr.createdAt.toDate()).toLocaleString()}</p>
                     <p><strong>Status:</strong> {qr.status}</p>
+                    {qr.labelGenerated && <p className="label-generated">Label Generated</p>}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

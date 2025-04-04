@@ -80,6 +80,13 @@ button:hover:not(:disabled) {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
+}
+
+.qr-item:hover {
+  transform: translateY(-5px);
 }
 
 .qr-item .qr-code {
@@ -99,6 +106,16 @@ button:hover:not(:disabled) {
 .qr-item .qr-info strong {
   color: #333;
   margin-right: 5px;
+}
+
+.label-generated {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: #e8f5e9;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 .admin-content p {

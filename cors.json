@@ -1,0 +1,25 @@
+[
+  {
+    "origin": ["http://localhost:3000"],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": [
+      "Content-Type",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Methods",
+      "Access-Control-Allow-Headers",
+      "Access-Control-Max-Age",
+      "Authorization",
+      "Content-Length",
+      "Content-Range",
+      "Content-Disposition",
+      "X-Requested-With",
+      "x-goog-resumable",
+      "x-goog-meta-uploader",
+      "x-goog-meta-uploadedBy",
+      "x-goog-meta-fileName",
+      "x-goog-meta-contentType",
+      "x-goog-meta-uploadDate"
+    ]
+  }
+] 

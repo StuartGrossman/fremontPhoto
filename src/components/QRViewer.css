@@ -1,34 +1,229 @@
 .qr-viewer {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2rem;
 }
 
 .qr-details {
-  display: flex;
-  gap: 40px;
-  margin-top: 30px;
   background: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qr-code-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #f7fafc;
+  border-radius: 12px;
+}
+
+.qr-code-section h2 {
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
 }
 
 .qr-code {
-  flex-shrink: 0;
-  padding: 20px;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
   background: white;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qr-url {
+  word-break: break-all;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #edf2f7;
+  border-radius: 6px;
+}
+
+.photo-section {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: #f7fafc;
+  border-radius: 12px;
+}
+
+.photo-section h3 {
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.photo-upload {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.photo-upload input[type="file"] {
+  width: 100%;
+  padding: 1rem;
+  border: 2px dashed #cbd5e0;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photo-upload input[type="file"]:hover {
+  border-color: #4299e1;
+  background: #ebf8ff;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.photo-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.photo-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.delete-photo-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(252, 129, 129, 0.9);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.delete-photo-btn:hover {
+  background: rgba(252, 129, 129, 1);
+  transform: translateY(-2px);
+}
+
+.shipping-section {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: #f7fafc;
+  border-radius: 12px;
+}
+
+.shipping-section h3 {
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.shipping-info {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.shipping-info p {
+  margin: 0.5rem 0;
+  color: #4a5568;
+}
+
+.shipping-info strong {
+  color: #2d3748;
+  margin-right: 0.5rem;
+}
+
+.generate-label-btn {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.generate-label-btn:hover:not(:disabled) {
+  background: #3182ce;
+  transform: translateY(-2px);
+}
+
+.generate-label-btn:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+}
+
+.actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.delete-qr-btn {
+  background: #fc8181;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete-qr-btn:hover {
+  background: #f56565;
+  transform: translateY(-2px);
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #4a5568;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #e53e3e;
+  background: #fff5f5;
+  border-radius: 8px;
+  margin: 1rem 0;
 }
 
 .qr-info {
   flex-grow: 1;
 }
 
+.qr-info h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
 .qr-info p {
-  margin: 10px 0;
-  font-size: 16px;
+  margin: 0.5rem 0;
 }
 
 .qr-info strong {
@@ -36,11 +231,93 @@
   margin-right: 10px;
 }
 
-.error {
-  color: #dc3545;
-  text-align: center;
-  padding: 20px;
-  background: #f8d7da;
+.selected-files {
+  margin-top: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f7fafc;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.file-item span {
+  flex-grow: 1;
+  margin-right: 1rem;
+  word-break: break-all;
+  color: #4a5568;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: #e53e3e;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.remove-file:hover {
+  background: #fff5f5;
+}
+
+.upload-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background: #4299e1;
+  color: white;
+  border: none;
   border-radius: 8px;
-  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover:not(:disabled) {
+  background: #3182ce;
+  transform: translateY(-2px);
+}
+
+.upload-btn:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+}
+
+.photo-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.photo-item .file-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.photo-item .upload-date {
+  font-size: 12px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .qr-viewer {
+    padding: 1rem;
+  }
+
+  .qr-details {
+    padding: 1.5rem;
+  }
+
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
 } 

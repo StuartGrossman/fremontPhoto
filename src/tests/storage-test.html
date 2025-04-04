@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Storage Test</title>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <h2>Firebase Storage Upload Test</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+    <div id="status"></div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxkYnm4mwHKxYqwxKoBqb5Vg6rKpHVFcE",
+            authDomain: "chatgpt-bubble.firebaseapp.com",
+            projectId: "chatgpt-bubble",
+            storageBucket: "chatgpt-bubble.firebasestorage.app",
+            messagingSenderId: "1098127383485",
+            appId: "1:1098127383485:web:c7d2d5a3c6a3a3b0f3f3f3"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
+        function updateStatus(message) {
+            document.getElementById('status').innerHTML += `<p>${message}</p>`;
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                updateStatus('Please select a file first');
+                return;
+            }
+
+            try {
+                updateStatus('Starting upload...');
+                
+                // Create a storage reference
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(`images/${file.name}`);
+
+                // Upload the file with metadata
+                const metadata = {
+                    contentType: file.type,
+                    customMetadata: {
+                        uploadedBy: 'test-user',
+                        fileName: file.name
+                    }
+                };
+
+                // Log headers for debugging
+                updateStatus('Uploading file...');
+                const uploadTask = fileRef.put(file, metadata);
+
+                // Monitor upload progress
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        updateStatus(`Upload progress: ${progress.toFixed(2)}%`);
+                    },
+                    (error) => {
+                        console.error('Upload error:', error);
+                        updateStatus(`Error: ${error.message}`);
+                    },
+                    async () => {
+                        try {
+                            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                            updateStatus(`Upload complete! File available at: ${downloadURL}`);
+                        } catch (error) {
+                            console.error('Error getting download URL:', error);
+                            updateStatus(`Error getting download URL: ${error.message}`);
+                        }
+                    }
+                );
+            } catch (error) {
+                console.error('Error:', error);
+                updateStatus(`Error: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html> 
