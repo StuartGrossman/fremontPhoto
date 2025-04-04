@@ -97,7 +97,7 @@ function QRViewer() {
     }
 
     try {
-      // Delete photos from Storage
+      // Delete photos from Storage if they exist
       if (qrCode.photos && qrCode.photos.length > 0) {
         const deletePromises = qrCode.photos.map(photoUrl => {
           const photoRef = ref(storage, photoUrl);
@@ -106,11 +106,21 @@ function QRViewer() {
         await Promise.all(deletePromises);
       }
 
-      // Delete QR code document
-      await deleteDoc(doc(db, 'qrCodes', id));
+      // Delete shipping label from Storage if it exists
+      if (qrCode.shippingLabel && qrCode.shippingLabel.url) {
+        const labelRef = ref(storage, qrCode.shippingLabel.url);
+        await deleteObject(labelRef);
+      }
+
+      // Delete QR code document from Firestore
+      const qrDocRef = doc(db, 'qrCodes', id);
+      await deleteDoc(qrDocRef);
+      
+      // Navigate back to admin page after successful deletion
       navigate('/admin');
     } catch (err) {
-      setError('Failed to delete QR code');
+      console.error('Error deleting QR code:', err);
+      setError('Failed to delete QR code. Please try again.');
     }
   };
 
