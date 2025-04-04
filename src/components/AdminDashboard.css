@@ -110,6 +110,25 @@
   position: absolute;
   bottom: 1.5rem;
   right: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.download-btn {
+  background: #48bb78;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.download-btn:hover {
+  background: #38a169;
+  transform: translateY(-2px);
 }
 
 .delete-btn {
@@ -166,14 +185,93 @@
 }
 
 @media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+
   .dashboard-header {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+    padding: 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.5rem;
   }
 
   .qr-codes-grid {
     grid-template-columns: 1fr;
+  }
+
+  .qr-code-card {
+    padding: 1rem;
+  }
+
+  .qr-code-image {
+    padding: 0.5rem;
+  }
+
+  .qr-code-image svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  .modal-btn {
+    width: 100%;
+  }
+
+  .qr-code-actions {
+    position: static;
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+
+  .download-btn,
+  .delete-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .generate-qr-btn {
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
+
+  .qr-code-info p {
+    font-size: 0.85rem;
+  }
+
+  .shipping-info {
+    padding: 0.75rem;
+  }
+
+  .qr-code-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .download-btn,
+  .delete-btn {
+    width: 100%;
+    padding: 0.75rem;
   }
 }
 

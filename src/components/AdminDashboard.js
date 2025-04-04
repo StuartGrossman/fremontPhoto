@@ -135,6 +135,45 @@ function AdminDashboard() {
     navigate(`/qr/${qrId}`);
   };
 
+  const handleDownloadQR = (e, qrId) => {
+    e.stopPropagation();
+    
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+    const svg = document.getElementById(`qr-${qrId}`);
+    const box = svg.getBoundingClientRect();
+    
+    canvas.width = box.width;
+    canvas.height = box.height;
+    
+    // Convert SVG to image
+    const img = new Image();
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+    
+    img.onload = () => {
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      
+      // Convert canvas to blob
+      canvas.toBlob((blob) => {
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `qr-code-${qrId}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(downloadUrl);
+      }, 'image/png');
+    };
+    
+    img.src = url;
+  };
+
   if (!currentUser) {
     return <div className="error">Please log in to access the admin dashboard</div>;
   }
@@ -170,6 +209,7 @@ function AdminDashboard() {
             <div className="qr-code-info">
               <div className="qr-code-image">
                 <QRCodeSVG 
+                  id={`qr-${qr.id}`}
                   value={`${window.location.origin}/qr/${qr.id}`}
                   size={150}
                   level="H"
@@ -193,6 +233,13 @@ function AdminDashboard() {
               )}
             </div>
             <div className="qr-code-actions">
+              <button
+                className="download-btn"
+                onClick={(e) => handleDownloadQR(e, qr.id)}
+                title="Download QR Code"
+              >
+                Download
+              </button>
               <button
                 className="delete-btn"
                 onClick={(e) => handleDeleteClick(e, qr)}
