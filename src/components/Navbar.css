@@ -50,4 +50,61 @@
 
 .nav-button:hover {
   background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem;
+  }
+
+  .navbar-brand a {
+    font-size: 1.2rem;
+  }
+
+  .navbar-links {
+    gap: 0.5rem;
+  }
+
+  .navbar-links a {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .user-email {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .nav-button {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.4rem;
+  }
+
+  .navbar-brand a {
+    font-size: 1.1rem;
+  }
+
+  .navbar-links {
+    gap: 0.4rem;
+  }
+
+  .navbar-links a {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .user-email {
+    font-size: 0.8rem;
+  }
+
+  .nav-button {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+  }
 } 
