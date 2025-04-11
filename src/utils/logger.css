@@ -1,0 +1,74 @@
+.log-display {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  max-height: 300px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.log-header h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.log-header button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.log-content {
+  padding: 8px;
+  overflow-y: auto;
+  max-height: 250px;
+}
+
+.log-entry {
+  margin-bottom: 4px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.log-entry.error {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff6b6b;
+}
+
+.log-entry.warning {
+  background: rgba(255, 165, 0, 0.2);
+  color: #ffd166;
+}
+
+.log-entry.info {
+  background: rgba(0, 128, 255, 0.2);
+  color: #4ecdc4;
+}
+
+.timestamp {
+  color: #888;
+  margin-right: 8px;
+}
+
+.message {
+  word-break: break-all;
+} 

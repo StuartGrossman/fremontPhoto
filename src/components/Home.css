@@ -2,109 +2,209 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
 }
 
 .hero-section {
   text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-radius: 16px;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
+  padding: 3rem 0;
 }
 
 .hero-section h1 {
   font-size: 3rem;
-  color: #2d3748;
+  font-weight: 700;
   margin-bottom: 1rem;
+  color: #000;
 }
 
-.hero-section p {
-  font-size: 1.25rem;
-  color: #4a5568;
-  margin-bottom: 2rem;
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.cta-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
+.hero-image {
+  margin: 2rem auto;
+  max-width: 300px;
 }
 
-.cta-button {
-  padding: 0.75rem 2rem;
+.hero-image img {
+  width: 100%;
+  height: auto;
   border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
 }
 
-.cta-button.primary {
-  background: #4299e1;
-  color: white;
+.feature-section {
+  margin-bottom: 4rem;
 }
 
-.cta-button.primary:hover {
-  background: #3182ce;
-  transform: translateY(-2px);
+.feature-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #000;
 }
 
-.cta-button.secondary {
-  background: white;
-  color: #4299e1;
-  border: 2px solid #4299e1;
-}
-
-.cta-button.secondary:hover {
-  background: #ebf8ff;
-  transform: translateY(-2px);
-}
-
-.features-section {
+.feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  padding: 2rem 0;
 }
 
 .feature-card {
-  background: white;
+  background: #fff;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-image {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.feature-image img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-image img {
+  transform: scale(1.05);
 }
 
 .feature-card h3 {
-  color: #2d3748;
-  margin-bottom: 1rem;
   font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #000;
 }
 
-.feature-card p {
-  color: #4a5568;
+.feature-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-card li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.feature-card li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #000;
+}
+
+.cta-section {
+  text-align: center;
+  padding: 3rem;
+  background: #f8f8f8;
+  border-radius: 8px;
+  margin-bottom: 4rem;
+}
+
+.cta-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.cta-button:hover {
+  background: #333;
+}
+
+.info-section {
+  margin-bottom: 4rem;
+}
+
+.info-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #000;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.info-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-image {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.info-image img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover .info-image img {
+  transform: scale(1.05);
+}
+
+.info-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.info-card p {
+  color: #666;
   line-height: 1.6;
 }
 
 @media (max-width: 768px) {
-  .hero-section {
-    padding: 3rem 1rem;
+  .home-container {
+    padding: 1rem;
   }
 
   .hero-section h1 {
     font-size: 2.5rem;
   }
 
-  .cta-buttons {
-    flex-direction: column;
+  .hero-image {
+    max-width: 200px;
   }
 
-  .cta-button {
-    width: 100%;
-    text-align: center;
+  .feature-grid,
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-section {
+    padding: 2rem 1rem;
   }
 } 

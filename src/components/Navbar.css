@@ -1,110 +1,95 @@
 .navbar {
-  background-color: #333;
-  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.navbar-brand a {
-  color: white;
-  text-decoration: none;
+.navbar-logo {
+  color: #333;
   font-size: 1.5rem;
   font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.navbar-links {
+.navbar-logo:hover {
+  color: #666;
+}
+
+.nav-menu {
   display: flex;
-  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   align-items: center;
 }
 
-.navbar-links a {
-  color: white;
+.nav-item {
+  margin-left: 1.5rem;
+}
+
+.nav-links {
+  color: #333;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.navbar-links a:hover {
-  background-color: #555;
-}
-
-.user-email {
-  color: #ccc;
-  font-size: 0.9rem;
-  margin-left: 1rem;
-}
-
-.nav-button {
-  background-color: #dc3545;
-  color: white;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  background: none;
   border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.nav-links:hover {
+  color: #666;
+}
+
+/* Login/Logout button specific styles */
+.nav-item button.nav-links {
+  background-color: #4a90e2;
+  color: white;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.nav-button:hover {
-  background-color: #c82333;
+.nav-item button.nav-links:hover {
+  background-color: #357abd;
+  color: white;
 }
 
+/* Mobile styles */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 0.5rem;
+  .navbar-container {
+    flex-direction: column;
+    padding: 1rem;
   }
 
-  .navbar-brand a {
-    font-size: 1.2rem;
+  .nav-menu {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: space-between;
   }
 
-  .navbar-links {
-    gap: 0.5rem;
-  }
-
-  .navbar-links a {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.9rem;
-  }
-
-  .user-email {
+  .nav-item {
     margin: 0;
-    font-size: 0.85rem;
   }
 
-  .nav-button {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .navbar {
-    padding: 0.4rem;
-  }
-
-  .navbar-brand a {
-    font-size: 1.1rem;
-  }
-
-  .navbar-links {
-    gap: 0.4rem;
-  }
-
-  .navbar-links a {
-    padding: 0.35rem 0.6rem;
-    font-size: 0.85rem;
-  }
-
-  .user-email {
-    font-size: 0.8rem;
-  }
-
-  .nav-button {
-    padding: 0.35rem 0.6rem;
-    font-size: 0.85rem;
+  .nav-item button.nav-links {
+    width: 100%;
+    text-align: center;
   }
 } 

@@ -1,7 +1,152 @@
 .qr-viewer {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 6rem auto 2rem;
   padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.qr-viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.qr-viewer-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.back-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #5a6268;
+}
+
+.qr-viewer-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.qr-code-section,
+.shipping-section,
+.photos-section {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.qr-code-section h2,
+.shipping-section h2,
+.photos-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.qr-code-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.download-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+}
+
+.shipping-info {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.shipping-info p {
+  margin: 0.5rem 0;
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.photo-item {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.photo-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.photo-item img:hover {
+  transform: scale(1.05);
+}
+
+.photo-item p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #dc3545;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .qr-viewer {
+    margin: 4rem 1rem 2rem;
+    padding: 1rem;
+  }
+
+  .qr-viewer-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 }
 
 .qr-details {
@@ -86,25 +231,6 @@
   margin-top: 1.5rem;
 }
 
-.photo-item {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.photo-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-.photo-item img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
 .delete-photo-btn {
   position: absolute;
   top: 0.75rem;
@@ -129,24 +255,6 @@
   padding: 2rem;
   background: #f7fafc;
   border-radius: 12px;
-}
-
-.shipping-section h3 {
-  color: #2d3748;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-}
-
-.shipping-info {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.shipping-info p {
-  margin: 0.5rem 0;
-  color: #4a5568;
 }
 
 .shipping-info strong {
@@ -194,23 +302,6 @@
 .delete-qr-btn:hover {
   background: #f56565;
   transform: translateY(-2px);
-}
-
-.loading {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #4a5568;
-}
-
-.error {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #e53e3e;
-  background: #fff5f5;
-  border-radius: 8px;
-  margin: 1rem 0;
 }
 
 .qr-info {
@@ -398,5 +489,44 @@
   .delete-photo-btn {
     padding: 0.4rem 0.8rem;
     font-size: 0.9rem;
+  }
+}
+
+.qr-viewer-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.qr-viewer-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.qr-viewer-content h2 {
+  font-size: 1.5rem;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.qr-viewer-content p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .qr-viewer-container {
+    margin: 1rem auto;
+  }
+
+  .qr-viewer-content {
+    padding: 1.5rem;
+  }
+
+  .qr-viewer-content h2 {
+    font-size: 1.25rem;
   }
 } 

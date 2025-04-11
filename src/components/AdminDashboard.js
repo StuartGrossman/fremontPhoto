@@ -179,8 +179,8 @@ function AdminDashboard() {
     setQrToDelete(null);
   };
 
-  const handleCardClick = (qrId) => {
-    navigate(`/qr/${qrId}`);
+  const handleCardClick = (qrCode) => {
+    navigate(`/qr/${qrCode.id}`);
   };
 
   const handleDownloadQR = (e, qrId) => {
@@ -268,7 +268,7 @@ function AdminDashboard() {
               <div 
                 key={qr.id} 
                 className="qr-code-card"
-                onClick={() => handleCardClick(qr.id)}
+                onClick={() => handleCardClick(qr)}
               >
                 <div className="qr-code-info">
                   <div className="qr-code-image">

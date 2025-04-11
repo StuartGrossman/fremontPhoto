@@ -3,14 +3,31 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.js';
 
 function AdminRoute({ children }) {
-  const { currentUser } = useAuth();
+  const { currentUser, loading } = useAuth();
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
 
-  // For now, allow any authenticated user to access the admin page
-  // You can add more specific admin checks later
+  // Debug: Log the user's claims
+  console.log('User claims:', currentUser.customClaims);
+  console.log('User email:', currentUser.email);
+
+  // Check if the user has admin status
+  if (!currentUser.customClaims?.admin) {
+    return (
+      <div className="error">
+        Access denied. You need admin privileges to access this page.
+        <p>Current user: {currentUser.email}</p>
+        <p>Admin status: {currentUser.customClaims?.admin ? 'Yes' : 'No'}</p>
+      </div>
+    );
+  }
+
   return children;
 }
 
