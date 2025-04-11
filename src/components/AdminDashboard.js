@@ -19,6 +19,7 @@ function AdminDashboard() {
   const [qrToDelete, setQrToDelete] = useState(null);
   const [deleteError, setDeleteError] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('all');
 
   useEffect(() => {
     if (!currentUser) {
@@ -49,6 +50,47 @@ function AdminDashboard() {
 
     fetchQrCodes();
   }, [currentUser]);
+
+  // Group QR codes by month
+  const groupQrCodesByMonth = () => {
+    const grouped = {};
+    
+    qrCodes.forEach(qr => {
+      const date = qr.createdAt?.toDate ? qr.createdAt.toDate() : new Date(qr.createdAt);
+      const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+      
+      if (!grouped[monthYear]) {
+        grouped[monthYear] = [];
+      }
+      grouped[monthYear].push(qr);
+    });
+    
+    return grouped;
+  };
+
+  // Get unique months for the filter dropdown
+  const getUniqueMonths = () => {
+    const months = new Set();
+    qrCodes.forEach(qr => {
+      const date = qr.createdAt?.toDate ? qr.createdAt.toDate() : new Date(qr.createdAt);
+      const monthYear = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+      months.add(monthYear);
+    });
+    return ['all', ...Array.from(months)].sort((a, b) => {
+      if (a === 'all') return -1;
+      if (b === 'all') return 1;
+      return new Date(b) - new Date(a);
+    });
+  };
+
+  // Filter QR codes based on selected month
+  const getFilteredQrCodes = () => {
+    const grouped = groupQrCodesByMonth();
+    if (selectedMonth === 'all') {
+      return grouped;
+    }
+    return { [selectedMonth]: grouped[selectedMonth] || [] };
+  };
 
   const handleGenerateQr = async () => {
     if (!currentUser) {
@@ -196,134 +238,136 @@ function AdminDashboard() {
     <div className="admin-dashboard">
       <div className="dashboard-header">
         <h1>Admin Dashboard</h1>
-        <button 
-          className="generate-qr-btn"
-          onClick={handleGenerateQr}
-          disabled={generating}
-        >
-          {generating ? 'Generating...' : 'Generate New QR Code'}
-        </button>
+        <div className="dashboard-controls">
+          <select 
+            className="month-filter"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          >
+            {getUniqueMonths().map(month => (
+              <option key={month} value={month}>
+                {month === 'all' ? 'All Months' : month}
+              </option>
+            ))}
+          </select>
+          <button 
+            className="generate-qr-btn"
+            onClick={handleGenerateQr}
+            disabled={generating}
+          >
+            {generating ? 'Generating...' : 'Generate New QR Code'}
+          </button>
+        </div>
       </div>
       
-      <div className="qr-codes-grid">
-        {qrCodes.map(qr => (
-          <div 
-            key={qr.id} 
-            className="qr-code-card"
-            onClick={() => handleCardClick(qr.id)}
-          >
-            <div className="qr-code-info">
-              <div className="qr-code-image">
-                <QRCodeSVG 
-                  id={`qr-${qr.id}`}
-                  value={`${window.location.origin}/qr/${qr.id}`}
-                  size={150}
-                  level="H"
-                  includeMargin={true}
-                />
-              </div>
-              <p>Created: {new Date(qr.createdAt?.toDate()).toLocaleString()}</p>
-              {qr.shippingLabel ? (
-                <div className="shipping-info">
-                  <p><strong>Tracking:</strong> {qr.shippingLabel.trackingNumber}</p>
-                  <p><strong>Carrier:</strong> {qr.shippingLabel.carrier}</p>
-                  <p><strong>Status:</strong> {qr.shippingLabel.status}</p>
-                </div>
-              ) : (
-                <div className="no-shipping-label">
-                  <p>No Shipping Label</p>
-                </div>
-              )}
-              {qr.photos && qr.photos.length > 0 && (
-                <div className="photo-gallery">
-                  <h4>Uploaded Photos ({qr.photos.length})</h4>
-                  <div className="photo-carousel">
-                    {qr.photos.map((photoUrl, index) => (
-                      <div key={index} className="photo-thumbnail">
-                        <img 
-                          src={photoUrl} 
-                          alt={`Photo ${index + 1}`}
+      {Object.entries(getFilteredQrCodes()).map(([monthYear, codes]) => (
+        <div key={monthYear} className="month-section">
+          <h2 className="month-header">{monthYear}</h2>
+          <div className="qr-codes-grid">
+            {codes.map(qr => (
+              <div 
+                key={qr.id} 
+                className="qr-code-card"
+                onClick={() => handleCardClick(qr.id)}
+              >
+                <div className="qr-code-info">
+                  <div className="qr-code-image">
+                    <QRCodeSVG 
+                      id={`qr-${qr.id}`}
+                      value={`${window.location.origin}/qr/${qr.id}`}
+                      size={150}
+                      level="H"
+                      includeMargin={true}
+                    />
+                  </div>
+                  <p>Created: {new Date(qr.createdAt?.toDate()).toLocaleString()}</p>
+                  {qr.shippingLabel ? (
+                    <div className="shipping-info">
+                      <p><strong>Tracking:</strong> {qr.shippingLabel.trackingNumber}</p>
+                      <p><strong>Carrier:</strong> {qr.shippingLabel.carrier}</p>
+                      <p><strong>Status:</strong> {qr.shippingLabel.status}</p>
+                    </div>
+                  ) : (
+                    <div className="no-shipping-label">
+                      <p>No Shipping Label</p>
+                    </div>
+                  )}
+                  {qr.photos && qr.photos.length > 0 && (
+                    <div className="photo-gallery">
+                      <h4>Uploaded Photos ({qr.photos.length})</h4>
+                      <div className="photo-carousel">
+                        {qr.photos.map((photoUrl, index) => (
+                          <div key={index} className="photo-thumbnail">
+                            <img 
+                              src={photoUrl} 
+                              alt={`Photo ${index + 1}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                window.open(photoUrl, '_blank');
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="carousel-controls">
+                        <button 
+                          className="carousel-btn"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.open(photoUrl, '_blank');
+                            const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
+                            carousel.scrollBy({ left: -200, behavior: 'smooth' });
                           }}
-                        />
+                        >
+                          ←
+                        </button>
+                        <button 
+                          className="carousel-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
+                            carousel.scrollBy({ left: 200, behavior: 'smooth' });
+                          }}
+                        >
+                          →
+                        </button>
                       </div>
-                    ))}
-                  </div>
-                  <div className="carousel-controls">
-                    <button 
-                      className="carousel-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
-                        carousel.scrollBy({ left: -200, behavior: 'smooth' });
-                      }}
-                    >
-                      ←
-                    </button>
-                    <button 
-                      className="carousel-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
-                        carousel.scrollBy({ left: 200, behavior: 'smooth' });
-                      }}
-                    >
-                      →
-                    </button>
-                  </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            <div className="qr-code-actions">
-              <button
-                className="download-btn"
-                onClick={(e) => handleDownloadQR(e, qr.id)}
-                title="Download QR Code"
-              >
-                Download
-              </button>
-              <button
-                className="delete-btn"
-                onClick={(e) => handleDeleteClick(e, qr)}
-                disabled={deletingId === qr.id}
-              >
-                {deletingId === qr.id ? 'Deleting...' : 'Delete'}
-              </button>
-            </div>
+                <div className="qr-code-actions">
+                  <button 
+                    className="download-btn"
+                    onClick={(e) => handleDownloadQR(e, qr.id)}
+                  >
+                    Download QR
+                  </button>
+                  <button 
+                    className="delete-btn"
+                    onClick={(e) => handleDeleteClick(e, qr)}
+                    disabled={deletingId === qr.id}
+                  >
+                    {deletingId === qr.id ? 'Deleting...' : 'Delete'}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
 
       {showDeleteModal && (
         <div className="modal-overlay">
           <div className="modal">
-            <h3>Confirm Delete</h3>
+            <h3>Delete QR Code</h3>
             <p>Are you sure you want to delete this QR code? This action cannot be undone.</p>
-            {deleteError && (
-              <div className="error-message">
-                {deleteError}
-              </div>
-            )}
-            {deleteSuccess && (
-              <div className="success-message">
-                QR code deleted successfully!
-              </div>
-            )}
+            {deleteError && <p className="error">{deleteError}</p>}
+            {deleteSuccess && <p className="success">QR code deleted successfully!</p>}
             <div className="modal-actions">
-              <button 
-                className="modal-btn cancel-btn"
-                onClick={handleDeleteCancel}
-              >
+              <button className="modal-btn cancel-btn" onClick={handleDeleteCancel}>
                 Cancel
               </button>
-              <button 
-                className="modal-btn delete-btn"
-                onClick={handleDeleteConfirm}
-                disabled={deletingId === qrToDelete?.id}
-              >
-                {deletingId === qrToDelete?.id ? 'Deleting...' : 'Delete'}
+              <button className="modal-btn delete-btn" onClick={handleDeleteConfirm}>
+                Delete
               </button>
             </div>
           </div>
