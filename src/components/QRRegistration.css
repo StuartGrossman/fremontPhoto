@@ -1,0 +1,83 @@
+.qr-registration {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 2rem 0;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+}
+
+.login-prompt {
+  padding: 2rem;
+}
+
+.login-prompt h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.login-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-button:hover {
+  background-color: #3367d6;
+}
+
+@media (max-width: 768px) {
+  .qr-registration {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+
+  .login-prompt {
+    padding: 1rem;
+  }
+
+  .login-prompt h2 {
+    font-size: 1.3rem;
+  }
+
+  .login-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qr-registration {
+    padding: 0.8rem;
+    padding-top: 4.5rem;
+  }
+
+  .login-prompt h2 {
+    font-size: 1.2rem;
+  }
+
+  .login-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+} 

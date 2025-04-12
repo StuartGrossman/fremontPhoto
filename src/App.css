@@ -1,3 +1,59 @@
+@media (max-width: 768px) {
+  /* Add padding to the top of all main content containers */
+  .profile,
+  .qr-registration,
+  .admin-dashboard,
+  .photo-gallery,
+  .home,
+  .test-page {
+    padding-top: 6rem !important; /* Increased padding to account for navbar */
+    min-height: 100vh;
+    margin-top: 8rem;
+    padding: 1rem;
+  }
+
+  /* Ensure the body has no margin */
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Make sure the main content takes up full width */
+  .profile,
+  .qr-registration,
+  .admin-dashboard,
+  .photo-gallery,
+  .home,
+  .test-page {
+    margin: 0 !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .main-content {
+    margin-top: 8rem;  /* Increased space for mobile navbar */
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile,
+  .qr-registration,
+  .admin-dashboard,
+  .photo-gallery,
+  .home,
+  .test-page {
+    padding-top: 5.5rem !important; /* Slightly less padding for smaller screens */
+    margin-top: 7.5rem;
+    padding: 0.5rem;
+  }
+
+  .main-content {
+    margin-top: 7.5rem;  /* Slightly less for smaller screens */
+    padding: 0.5rem;
+  }
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -5,8 +61,9 @@
 }
 
 .main-content {
-  flex: 1;
+  margin-top: 6rem;  /* Space for fixed navbar */
   padding: 2rem;
+  min-height: calc(100vh - 6rem);
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -21,4 +78,33 @@
 .App-content {
   flex: 1;
   padding: 20px;
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+}
+
+/* Main content container - applies to all pages */
+.profile,
+.qr-registration,
+.admin-dashboard,
+.photo-gallery,
+.home,
+.test-page {
+  margin-top: 6rem;
+  padding: 2rem;
+  min-height: calc(100vh - 6rem);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
 } 

@@ -2,9 +2,6 @@
   max-width: 1200px;
   margin: 6rem auto 2rem;
   padding: 2rem;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .qr-viewer-header {
@@ -12,6 +9,11 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
 }
 
 .qr-viewer-header h1 {
@@ -38,12 +40,30 @@
   gap: 2rem;
 }
 
-.qr-code-section,
+.qr-code-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.qr-code-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.qr-code-display svg {
+  margin-bottom: 1rem;
+}
+
 .shipping-section,
 .photos-section {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
+  background: white;
+  padding: 2rem;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .qr-code-section h2,
@@ -87,16 +107,13 @@
 
 .photos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
 
 .photo-item {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .photo-item img {
@@ -105,7 +122,7 @@
   object-fit: cover;
   border-radius: 4px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s;
 }
 
 .photo-item img:hover {
@@ -113,9 +130,9 @@
 }
 
 .photo-item p {
-  margin: 0.5rem 0 0;
+  margin-top: 0.5rem;
   font-size: 0.9rem;
-  color: #6c757d;
+  color: #666;
 }
 
 .loading {
@@ -134,18 +151,51 @@
 
 @media (max-width: 768px) {
   .qr-viewer {
-    margin: 4rem 1rem 2rem;
+    margin: 5rem 1rem 2rem;
     padding: 1rem;
   }
 
   .qr-viewer-header {
     flex-direction: column;
-    gap: 1rem;
     text-align: center;
+    gap: 1rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .qr-code-display svg {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 256px;
   }
 
   .photos-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .photos-section {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qr-viewer {
+    margin: 4.5rem 0.5rem 1rem;
+    padding: 0.5rem;
+  }
+
+  .qr-code-section,
+  .shipping-section,
+  .photos-section {
+    padding: 1rem;
   }
 }
 
@@ -399,99 +449,6 @@
   color: #999;
 }
 
-@media (max-width: 768px) {
-  .qr-viewer {
-    padding: 1rem;
-  }
-
-  .qr-details {
-    padding: 1rem;
-  }
-
-  .qr-code-section {
-    padding: 1rem;
-  }
-
-  .qr-code {
-    padding: 1rem;
-  }
-
-  .qr-code svg {
-    width: 200px;
-    height: 200px;
-  }
-
-  .photo-section {
-    padding: 1rem;
-  }
-
-  .photo-upload {
-    padding: 1rem;
-  }
-
-  .photo-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-
-  .photo-item img {
-    height: 200px;
-  }
-
-  .shipping-section {
-    padding: 1rem;
-  }
-
-  .shipping-info {
-    padding: 1rem;
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .generate-label-btn,
-  .delete-qr-btn {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .qr-code svg {
-    width: 150px;
-    height: 150px;
-  }
-
-  .photo-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .photo-item img {
-    height: 250px;
-  }
-
-  .qr-code-section h2,
-  .photo-section h3,
-  .shipping-section h3 {
-    font-size: 1.25rem;
-  }
-
-  .qr-url {
-    font-size: 0.8rem;
-  }
-
-  .photo-upload input[type="file"] {
-    padding: 0.75rem;
-  }
-
-  .delete-photo-btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-  }
-}
-
 .qr-viewer-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -529,4 +486,51 @@
   .qr-viewer-content h2 {
     font-size: 1.25rem;
   }
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-prompt h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.login-prompt p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.login-btn {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+}
+
+.login-btn:hover {
+  background-color: #3367d6;
+}
+
+.photos-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
 } 

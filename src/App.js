@@ -11,6 +11,8 @@ import PhotoGallery from './components/PhotoGallery.js';
 import AdminManagement from './components/AdminManagement.js';
 import Navbar from './components/Navbar.js';
 import Profile from './components/Profile.js';
+import QRRegistration from './components/QRRegistration.js';
+import TestPage from './components/TestPage.js';
 import './App.css';
 
 function AppRoutes() {
@@ -38,6 +40,14 @@ function AppRoutes() {
         }
       />
       <Route
+        path="/test"
+        element={
+          <AdminRoute>
+            <TestPage />
+          </AdminRoute>
+        }
+      />
+      <Route
         path="/giveAdm"
         element={
           <AdminRoute>
@@ -53,6 +63,7 @@ function AppRoutes() {
           </PrivateRoute>
         }
       />
+      <Route path="/register/:id" element={<QRRegistration />} />
       <Route path="/gallery/:id" element={<PhotoGallery />} />
     </Routes>
   );

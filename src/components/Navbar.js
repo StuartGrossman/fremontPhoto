@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.js';
 import './Navbar.css';
 
 function Navbar() {
   const { currentUser, isAdmin, loginWithGoogle, logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -22,20 +23,41 @@ function Navbar() {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
           Fremont Photo Co
         </Link>
-        <ul className="nav-menu">
+        <div className="menu-icon" onClick={toggleMenu}>
+          {isMenuOpen ? (
+            <i className="fas fa-times" style={{ fontSize: '1.5rem', color: '#4a90e2' }} />
+          ) : (
+            <i className="fas fa-bars" style={{ fontSize: '1.5rem', color: '#4a90e2' }} />
+          )}
+        </div>
+        <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
           <li className="nav-item">
-            <Link to="/" className="nav-links">Home</Link>
+            <Link to="/" className="nav-links" onClick={() => setIsMenuOpen(false)}>Home</Link>
           </li>
           {currentUser && (
             <li className="nav-item">
-              <Link to="/profile" className="nav-links">Profile</Link>
+              <Link to="/profile" className="nav-links" onClick={() => setIsMenuOpen(false)}>Profile</Link>
             </li>
+          )}
+          {isAdmin && (
+            <>
+              <li className="nav-item">
+                <Link to="/admin" className="nav-links" onClick={() => setIsMenuOpen(false)}>Admin Dashboard</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/test" className="nav-links" onClick={() => setIsMenuOpen(false)}>Test Page</Link>
+              </li>
+            </>
           )}
           <li className="nav-item">
             {currentUser ? (

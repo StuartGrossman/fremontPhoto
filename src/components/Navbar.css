@@ -1,20 +1,20 @@
 .navbar {
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem 0;
+  padding: 1rem;
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
 }
 
 .navbar-logo {
@@ -23,10 +23,19 @@
   font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;
+  margin-right: 2rem;
 }
 
 .navbar-logo:hover {
   color: #666;
+}
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: auto;
+  z-index: 1001;
 }
 
 .nav-menu {
@@ -35,10 +44,11 @@
   margin: 0;
   padding: 0;
   align-items: center;
+  gap: 1.5rem;
 }
 
 .nav-item {
-  margin-left: 1.5rem;
+  margin: 0;
 }
 
 .nav-links {
@@ -73,23 +83,71 @@
 
 /* Mobile styles */
 @media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    padding: 1rem;
+  .menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: #4a90e2;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .menu-icon i {
+    color: white !important;
+    font-size: 1.25rem !important;
   }
 
   .nav-menu {
-    margin-top: 1rem;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
     width: 100%;
-    justify-content: space-between;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+
+  .nav-menu.active {
+    height: auto;
+    padding: 1rem 0;
   }
 
   .nav-item {
-    margin: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
   }
 
   .nav-item button.nav-links {
     width: 100%;
     text-align: center;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0;
+  }
+
+  .nav-links:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.25rem;
+    margin-right: 0;
+  }
+
+  .nav-links {
+    font-size: 0.9rem;
   }
 } 

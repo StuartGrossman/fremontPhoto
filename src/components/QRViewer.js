@@ -10,13 +10,14 @@ import './QRViewer.css';
 function QRViewer() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, isAdmin, loginWithGoogle } = useAuth();
   const [qrCode, setQrCode] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [generatingLabel, setGeneratingLabel] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   useEffect(() => {
     const fetchQrCode = async () => {
@@ -25,20 +26,80 @@ function QRViewer() {
         const qrCodeDoc = await getDoc(qrCodeRef);
 
         if (!qrCodeDoc.exists()) {
-          setError('QR code not found');
+          setError('QR code not found. Please check the URL or contact support.');
+          setLoading(false);
           return;
         }
 
         const qrCodeData = qrCodeDoc.data();
         
-        // Update the QR code with the user's ID if it doesn't have one
-        if (!qrCodeData.userId && currentUser) {
+        // If the QR code data is incomplete, update it
+        if (!qrCodeData.id) {
           await updateDoc(qrCodeRef, {
-            userId: currentUser.uid,
-            status: 'Registered'
+            id: id,
+            status: qrCodeData.status || 'Active',
+            userId: qrCodeData.userId || null
           });
-          qrCodeData.userId = currentUser.uid;
-          qrCodeData.status = 'Registered';
+          qrCodeData.id = id;
+          qrCodeData.status = qrCodeData.status || 'Active';
+          qrCodeData.userId = qrCodeData.userId || null;
+        }
+        
+        // If user is not logged in, show login prompt
+        if (!currentUser) {
+          setShowLoginPrompt(true);
+          setQrCode(qrCodeData);
+          setLoading(false);
+          return;
+        }
+
+        // If user is not admin, save the camera to their profile and redirect
+        if (!isAdmin) {
+          // Update the QR code with the user's ID if it doesn't have one
+          if (!qrCodeData.userId) {
+            await updateDoc(qrCodeRef, {
+              userId: currentUser.uid,
+              status: 'Registered'
+            });
+            qrCodeData.userId = currentUser.uid;
+            qrCodeData.status = 'Registered';
+          }
+
+          // Create or update the user's profile document
+          const userProfileRef = doc(db, 'users', currentUser.uid);
+          const userProfileDoc = await getDoc(userProfileRef);
+          
+          if (userProfileDoc.exists()) {
+            const userProfile = userProfileDoc.data();
+            const cameras = userProfile.cameras || [];
+            
+            // Check if camera already exists in user's profile
+            if (!cameras.some(camera => camera.id === id)) {
+              await updateDoc(userProfileRef, {
+                cameras: [...cameras, {
+                  id: id,
+                  name: `Camera ${qrCodeData.id}`,
+                  status: 'Registered',
+                  createdAt: new Date()
+                }]
+              });
+            }
+          } else {
+            // Create new user profile with the camera
+            await updateDoc(userProfileRef, {
+              cameras: [{
+                id: id,
+                name: `Camera ${qrCodeData.id}`,
+                status: 'Registered',
+                createdAt: new Date()
+              }],
+              createdAt: new Date()
+            });
+          }
+
+          // Redirect to profile page
+          navigate('/profile');
+          return;
         }
 
         setQrCode(qrCodeData);
@@ -50,7 +111,16 @@ function QRViewer() {
     };
 
     fetchQrCode();
-  }, [id, currentUser]);
+  }, [id, currentUser, isAdmin, navigate]);
+
+  const handleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      // After successful login, the useEffect will run again and handle the redirection
+    } catch (error) {
+      setError('Failed to login: ' + error.message);
+    }
+  };
 
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);
@@ -172,6 +242,18 @@ function QRViewer() {
     );
   }
 
+  if (showLoginPrompt) {
+    return (
+      <div className="qr-viewer">
+        <div className="login-prompt">
+          <h2>Camera {qrCode?.id} Found!</h2>
+          <p>Please login to register this camera to your account.</p>
+          <button className="login-btn" onClick={handleLogin}>Login with Google</button>
+        </div>
+      </div>
+    );
+  }
+
   if (!qrCode) {
     return (
       <div className="qr-viewer">
@@ -212,17 +294,37 @@ function QRViewer() {
       <div className="qr-viewer-content">
         <div className="qr-code-section">
           <h2>QR Code</h2>
-          <div className="qr-code-image">
-            <img
-              src={qrCode.qrCodeUrl}
-              alt={`QR Code for camera ${qrCode.id}`}
-              width="200"
-              height="200"
+          <div className="qr-code-display">
+            <QRCodeSVG
+              value={`${window.location.origin}/register/${id}`}
+              size={256}
+              level="H"
+              includeMargin={true}
             />
+            <p>Scan this QR code to register your camera</p>
           </div>
           <button
             className="download-btn"
-            onClick={() => window.open(qrCode.qrCodeUrl, '_blank')}
+            onClick={() => {
+              const canvas = document.createElement("canvas");
+              const svg = document.querySelector(".qr-code-display svg");
+              const svgData = new XMLSerializer().serializeToString(svg);
+              const img = new Image();
+              img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                const pngUrl = canvas.toDataURL("image/png");
+                const downloadLink = document.createElement("a");
+                downloadLink.href = pngUrl;
+                downloadLink.download = `qr-code-${id}.png`;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+              };
+              img.src = "data:image/svg+xml;base64," + btoa(svgData);
+            }}
           >
             Download QR Code
           </button>
@@ -259,9 +361,61 @@ function QRViewer() {
                     onClick={() => window.open(photo, '_blank')}
                   />
                   <p>Uploaded: {new Date(qrCode.createdAt?.toDate()).toLocaleString()}</p>
+                  {isAdmin && (
+                    <button
+                      className="delete-photo-btn"
+                      onClick={() => handleDeletePhoto(photo)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {isAdmin && (
+          <div className="photo-upload">
+            <h2>Upload New Photos</h2>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFileSelect}
+            />
+            {selectedFiles.length > 0 && (
+              <div className="selected-files">
+                {selectedFiles.map((file, index) => (
+                  <div key={index} className="file-item">
+                    <span>{file.name}</span>
+                    <button
+                      className="remove-file"
+                      onClick={() => {
+                        setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              className="upload-btn"
+              onClick={handleUpload}
+              disabled={selectedFiles.length === 0 || uploading}
+            >
+              {uploading ? 'Uploading...' : 'Upload Photos'}
+            </button>
+          </div>
+        )}
+
+        {isAdmin && (
+          <div className="admin-actions">
+            <button onClick={handleDeleteQr} className="delete-button">
+              Delete QR Code
+            </button>
           </div>
         )}
       </div>

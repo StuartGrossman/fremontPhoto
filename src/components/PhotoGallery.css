@@ -1,7 +1,10 @@
 .photo-gallery {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 1rem;
+  margin: 6rem auto 2rem;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .gallery-header {
@@ -9,8 +12,6 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .gallery-header h1 {
@@ -19,80 +20,53 @@
   font-size: 2rem;
 }
 
-.gallery-actions {
+.header-actions {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .share-btn,
 .select-all-btn,
 .download-btn {
   padding: 0.5rem 1rem;
+  background-color: #000;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
-.share-btn {
-  background-color: #4a90e2;
-  color: white;
-}
-
-.share-btn:hover {
-  background-color: #357abd;
-}
-
-.select-all-btn {
-  background-color: #f8f9fa;
-  color: #333;
-  border: 1px solid #ddd;
-}
-
-.select-all-btn:hover {
-  background-color: #e9ecef;
-}
-
-.download-btn {
-  background-color: #28a745;
-  color: white;
-}
-
+.share-btn:hover,
+.select-all-btn:hover,
 .download-btn:hover {
-  background-color: #218838;
+  background-color: #333;
 }
 
 .photos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
 }
 
 .photo-item {
   position: relative;
-  aspect-ratio: 1;
-  cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.photo-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.photo-item.selected {
-  border: 3px solid #4a90e2;
+  cursor: pointer;
+  aspect-ratio: 1;
 }
 
 .photo-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.05);
 }
 
 .photo-overlay {
@@ -101,7 +75,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,25 +87,13 @@
   opacity: 1;
 }
 
-.photo-number {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
+.photo-item.selected {
+  border: 3px solid #000;
 }
 
-.checkmark {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background-color: #4a90e2;
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+.photo-item.selected .photo-overlay {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .loading,
@@ -151,21 +113,72 @@
 
 @media (max-width: 768px) {
   .photo-gallery {
-    margin: 1rem;
-    padding: 0.5rem;
+    margin: 4rem 1rem 2rem;
+    padding: 1rem;
   }
 
   .gallery-header {
     flex-direction: column;
-    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
 
-  .gallery-actions {
+  .gallery-header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .header-actions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+  }
+
+  .share-btn,
+  .select-all-btn,
+  .download-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
 
   .photos-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-gallery {
+    margin: 3rem 0.5rem 1rem;
+    padding: 0.75rem;
+  }
+
+  .gallery-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .share-btn,
+  .select-all-btn,
+  .download-btn {
+    width: 100%;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .photo-item {
+    border-radius: 4px;
+  }
+
+  .photo-item.selected {
+    border-width: 2px;
   }
 } 

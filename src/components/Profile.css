@@ -1,8 +1,8 @@
 .profile {
   max-width: 1200px;
-  margin: 6rem auto 2rem;
+  margin: 2rem auto;
   padding: 2rem;
-  background-color: #fff;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -16,59 +16,53 @@
 .cameras-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .camera-card {
-  background-color: #f8f9fa;
+  background-color: white;
   border-radius: 8px;
   padding: 1.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .camera-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.camera-info {
-  flex: 1;
-}
-
-.camera-info h2 {
-  margin: 0 0 0.5rem;
+.camera-card h2 {
+  margin: 0 0 1rem;
   color: #333;
   font-size: 1.5rem;
 }
 
-.camera-info p {
+.camera-card p {
   margin: 0.5rem 0;
-  color: #6c757d;
+  color: #666;
 }
 
-.generate-label-btn {
+.generate-label-button {
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #000;
-  color: #fff;
+  background-color: #007bff;
+  color: white;
   border: none;
+  padding: 0.8rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s;
+  width: 100%;
 }
 
-.generate-label-btn:hover {
-  background-color: #333;
+.generate-label-button:hover:not(:disabled) {
+  background-color: #0056b3;
 }
 
-.generate-label-btn:disabled {
-  background-color: #6c757d;
+.generate-label-button:disabled {
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
@@ -81,37 +75,123 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.loading,
-.error {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-}
-
 .loading {
-  color: #6c757d;
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  margin: 2rem 0;
 }
 
 .error {
   color: #dc3545;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.test-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.test-registration-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.test-registration-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.test-registration-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
   .profile {
-    margin: 4rem 1rem 2rem;
+    margin: 0;
     padding: 1rem;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+
+  .profile h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .cameras-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 
   .camera-card {
-    flex-direction: column;
-    text-align: center;
+    padding: 1rem;
+  }
+
+  .camera-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .generate-label-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .test-section {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .test-registration-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
   }
 
   .qr-code-preview {
     margin: 1rem 0 0;
+  }
+
+  .qr-code-preview img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile {
+    padding: 0.8rem;
+    padding-top: 4.5rem;
+  }
+
+  .profile h1 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .camera-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .camera-card p {
+    font-size: 0.9rem;
+  }
+
+  .generate-label-button,
+  .test-registration-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .qr-code-preview img {
+    width: 60px;
+    height: 60px;
   }
 } 

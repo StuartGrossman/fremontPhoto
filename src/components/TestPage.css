@@ -1,0 +1,110 @@
+.test-page {
+  max-width: 1200px;
+  margin: 6rem auto 2rem;
+  padding: 2rem;
+}
+
+.test-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.test-controls button {
+  padding: 0.75rem 1.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 200px;
+}
+
+.test-controls button:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.test-controls button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.test-results {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.test-results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  min-width: 600px;
+}
+
+.test-results th,
+.test-results td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.test-results th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.test-results tr.success {
+  background-color: rgba(40, 167, 69, 0.1);
+}
+
+.test-results tr.failed {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.test-results tr.error {
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+@media (max-width: 768px) {
+  .test-page {
+    margin: 5rem 1rem 2rem;
+    padding: 1rem;
+  }
+
+  .test-controls {
+    flex-direction: column;
+  }
+
+  .test-controls button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .test-results {
+    padding: 1rem;
+  }
+
+  .test-results table {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .test-page {
+    margin: 4.5rem 0.5rem 1rem;
+    padding: 0.5rem;
+  }
+
+  .test-results th,
+  .test-results td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+} 

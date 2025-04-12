@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, orderBy, getDocs, deleteDoc, doc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, deleteDoc, doc, addDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { ref, deleteObject } from 'firebase/storage';
 import { db, storage } from '../firebase.js';
 import { useNavigate } from 'react-router-dom';
@@ -105,7 +105,15 @@ function AdminDashboard() {
         createdAt: serverTimestamp(),
         photos: [],
         shippingLabel: null,
-        createdBy: currentUser.uid
+        createdBy: currentUser.uid,
+        status: 'Active',
+        userId: null,
+        id: null // This will be updated with the document ID after creation
+      });
+
+      // Update the document with its own ID
+      await updateDoc(newQrDoc, {
+        id: newQrDoc.id
       });
 
       // Add the new QR code to the local state
@@ -114,7 +122,9 @@ function AdminDashboard() {
         createdAt: new Date(),
         photos: [],
         shippingLabel: null,
-        createdBy: currentUser.uid
+        createdBy: currentUser.uid,
+        status: 'Active',
+        userId: null
       }, ...prev]);
 
       // Navigate to the new QR code
