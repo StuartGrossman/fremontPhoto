@@ -18,6 +18,8 @@ function QRViewer() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [generatingLabel, setGeneratingLabel] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const fetchQrCode = async () => {
@@ -177,50 +179,83 @@ function QRViewer() {
     }
   };
 
-  const handleDeleteQr = async () => {
-    if (!window.confirm('Are you sure you want to delete this QR code? This action cannot be undone.')) {
-      return;
-    }
-
+  const handleDeleteQR = async () => {
     try {
-      // Delete photos from Storage
+      setLoading(true);
+      setError(null);
+      
+      // Delete QR code document
+      await deleteDoc(doc(db, 'qrCodes', id));
+      
+      // Delete associated photos from storage
       if (qrCode.photos && qrCode.photos.length > 0) {
-        const deletePromises = qrCode.photos.map(photoUrl => {
-          const photoRef = ref(storage, photoUrl);
+        const deletePromises = qrCode.photos.map(photo => {
+          const photoRef = ref(storage, photo);
           return deleteObject(photoRef);
         });
         await Promise.all(deletePromises);
       }
-
-      // Delete QR code document
-      await deleteDoc(doc(db, 'qrCodes', id));
-      navigate('/admin');
+      
+      // Delete shipping label if exists
+      if (qrCode.shippingLabel) {
+        const labelRef = ref(storage, qrCode.shippingLabel.labelUrl);
+        await deleteObject(labelRef);
+      }
+      
+      navigate('/profile');
     } catch (err) {
-      setError('Failed to delete QR code');
+      console.error('Error deleting QR code:', err);
+      setError('Failed to delete QR code. Please try again.');
+    } finally {
+      setLoading(false);
+      setShowDeleteModal(false);
     }
   };
 
   const handleGenerateLabel = async () => {
     setGeneratingLabel(true);
     try {
-      // Simulate label generation
-      const shippingLabel = {
+      const labelData = {
         trackingNumber: `TRK${Date.now()}`,
         carrier: 'USPS',
         status: 'In Transit',
-        createdAt: new Date()
+        createdAt: new Date().toISOString()
       };
 
+      // Update the QR code document
       await updateDoc(doc(db, 'qrCodes', id), {
-        shippingLabel
+        shippingLabel: labelData
       });
 
+      // Update the user's profile if they own this camera
+      if (qrCode.userId) {
+        const userProfileRef = doc(db, 'users', qrCode.userId);
+        const userProfileDoc = await getDoc(userProfileRef);
+        
+        if (userProfileDoc.exists()) {
+          const userProfile = userProfileDoc.data();
+          const updatedCameras = userProfile.cameras.map(camera => 
+            camera.id === id 
+              ? { ...camera, shippingLabel: labelData }
+              : camera
+          );
+          
+          await updateDoc(userProfileRef, {
+            cameras: updatedCameras
+          });
+        }
+      }
+
+      // Update local state
       setQrCode(prev => ({
         ...prev,
-        shippingLabel
+        shippingLabel: labelData
       }));
-    } catch (err) {
-      setError('Failed to generate shipping label');
+
+      setSuccess('Shipping label generated successfully');
+    } catch (error) {
+      console.error('Error generating label:', error);
+      setError('Failed to generate shipping label: ' + error.message);
     } finally {
       setGeneratingLabel(false);
     }
@@ -267,24 +302,6 @@ function QRViewer() {
       <div className="qr-viewer-header">
         <h1>Camera {qrCode.id}</h1>
         <div className="header-actions">
-          <button
-            className="share-btn"
-            onClick={() => {
-              const galleryUrl = `${window.location.origin}/gallery/${id}`;
-              if (navigator.share) {
-                navigator.share({
-                  title: `Photos from Camera ${qrCode.id}`,
-                  url: galleryUrl
-                }).catch(console.error);
-              } else {
-                navigator.clipboard.writeText(galleryUrl)
-                  .then(() => alert('Gallery link copied to clipboard!'))
-                  .catch(console.error);
-              }
-            }}
-          >
-            Share Public Gallery
-          </button>
           <button className="back-btn" onClick={() => navigate(-1)}>
             Back to Profile
           </button>
@@ -413,12 +430,41 @@ function QRViewer() {
 
         {isAdmin && (
           <div className="admin-actions">
-            <button onClick={handleDeleteQr} className="delete-button">
+            <button 
+              className="delete-qr-btn"
+              onClick={() => setShowDeleteModal(true)}
+              disabled={loading}
+            >
               Delete QR Code
             </button>
           </div>
         )}
       </div>
+
+      {showDeleteModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Delete QR Code</h3>
+            <p>Are you sure you want to delete this QR code? This action cannot be undone and will permanently delete all associated photos and shipping labels.</p>
+            <div className="modal-actions">
+              <button 
+                className="modal-btn cancel-btn"
+                onClick={() => setShowDeleteModal(false)}
+                disabled={loading}
+              >
+                Cancel
+              </button>
+              <button 
+                className="modal-btn delete-btn"
+                onClick={handleDeleteQR}
+                disabled={loading}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

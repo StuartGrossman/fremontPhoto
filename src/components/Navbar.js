@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.js';
 import './Navbar.css';
 
 function Navbar() {
   const { currentUser, isAdmin, loginWithGoogle, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile';
 
   const handleLogin = async () => {
     try {
@@ -18,6 +21,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await logout();
+      navigate('/');
     } catch (error) {
       console.error('Failed to logout:', error);
     }
@@ -41,16 +45,6 @@ function Navbar() {
           )}
         </div>
         <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          {!isAdmin && (
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            </li>
-          )}
-          {currentUser && !isAdmin && (
-            <li className="nav-item">
-              <Link to="/profile" className="nav-links" onClick={() => setIsMenuOpen(false)}>Profile</Link>
-            </li>
-          )}
           {isAdmin && (
             <>
               <li className="nav-item">

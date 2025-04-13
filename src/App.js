@@ -25,6 +25,8 @@ function AppRoutes() {
         element={
           isAdmin ? (
             <Navigate to="/admin" replace />
+          ) : currentUser ? (
+            <Navigate to="/profile" replace />
           ) : (
             <Home />
           )

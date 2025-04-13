@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import { useAuth } from '../contexts/AuthContext.js';
 import './QRRegistration.css';
@@ -65,7 +65,10 @@ function QRRegistration() {
           }
         } else {
           // Create new user profile with the camera
-          await updateDoc(userProfileRef, {
+          await setDoc(userProfileRef, {
+            uid: currentUser.uid,
+            email: currentUser.email,
+            isAdmin: false,
             cameras: [{
               id: id,
               name: `Camera ${qrCodeData.id}`,

@@ -1,97 +1,116 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.js';
 import './Home.css';
 
 function Home() {
+  const { loginWithGoogle } = useAuth();
+
+  const handleButtonClick = async (e) => {
+    e.preventDefault();
+    try {
+      await loginWithGoogle();
+    } catch (error) {
+      console.error('Failed to login with Google:', error);
+    }
+  };
+
   return (
     <div className="home-container">
-      <div className="hero-section">
-        <h1>Fremont Photo Co</h1>
-        <p className="subtitle">Local owned and operated in-house film lab located in downtown Las Vegas</p>
+      <section className="hero-section">
+        <div className="hero-content">
+          <h1>Fremont Photo Co</h1>
+          <p className="subtitle">Local owned and operated in-house film lab located in downtown Las Vegas</p>
+          <button onClick={handleButtonClick} className="hero-cta">Get Started</button>
+        </div>
         <div className="hero-image">
-          <img src="https://picsum.photos/300/300?grayscale" alt="Fremont Photo Co" />
+          <img src="/images/34c4b27b-cc98-42d6-a156-a91ea95edd78.jpeg" alt="Fremont Photo Co Storefront" />
         </div>
-      </div>
+      </section>
 
-      <div className="feature-section">
-        <h2>Film Development Made Simple</h2>
-        <div className="feature-grid">
+      <section className="features-section">
+        <h2>Why Choose Us</h2>
+        <div className="features-grid">
           <div className="feature-card">
             <div className="feature-image">
-              <img src="https://picsum.photos/400/300?grayscale" alt="QR code system" />
+              <img src="/images/f8ff14f8-2fcc-46bc-9e27-80030e27b192.jpeg" alt="QR code system" />
             </div>
-            <h3>QR Code System</h3>
-            <p>Each camera comes with a unique QR code. Simply scan it to:</p>
-            <ul>
-              <li>Generate a shipping label</li>
-              <li>Track your film's progress</li>
-              <li>Receive notifications when your photos are ready</li>
-            </ul>
+            <div className="feature-content">
+              <h3>Smart QR System</h3>
+              <p>Track your film's journey from start to finish with our innovative QR code system.</p>
+              <ul>
+                <li>Instant shipping labels</li>
+                <li>Real-time progress tracking</li>
+                <li>Digital delivery notifications</li>
+              </ul>
+            </div>
           </div>
           
           <div className="feature-card">
             <div className="feature-image">
-              <img src="https://picsum.photos/400/300?grayscale" alt="Shipping process" />
+              <img src="/images/a8408962-4b1b-4873-a68e-b721c489cfd4.jpeg" alt="Shipping process" />
             </div>
-            <h3>Easy Shipping</h3>
-            <p>No more trips to the post office. Our system:</p>
-            <ul>
-              <li>Creates pre-paid shipping labels</li>
-              <li>Provides tracking information</li>
-              <li>Ensures safe delivery to our lab</li>
-            </ul>
+            <div className="feature-content">
+              <h3>Hassle-Free Shipping</h3>
+              <p>We've simplified the shipping process to make it as easy as possible.</p>
+              <ul>
+                <li>Pre-paid shipping labels</li>
+                <li>Secure packaging</li>
+                <li>Tracking from start to finish</li>
+              </ul>
+            </div>
           </div>
 
           <div className="feature-card">
             <div className="feature-image">
-              <img src="https://picsum.photos/400/300?grayscale" alt="Film development" />
+              <img src="/images/b55f88dd-619d-4fab-96a5-44b77269b2cb.jpeg" alt="Film development" />
             </div>
-            <h3>Hand Development</h3>
-            <p>Your film is developed with care:</p>
-            <ul>
-              <li>Processed using our DEV.A Compact Automatic Film Processor</li>
-              <li>Scanned with our NORITSU HS-1800 for high-resolution results</li>
-              <li>Delivered digitally via secure transfer</li>
-            </ul>
+            <div className="feature-content">
+              <h3>Professional Development</h3>
+              <p>Your film is in expert hands with our state-of-the-art equipment.</p>
+              <ul>
+                <li>DEV.A Compact Processor</li>
+                <li>NORITSU HS-1800 Scanning</li>
+                <li>High-resolution digital delivery</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="cta-section">
-        <h2>Ready to Develop Your Film?</h2>
-        <p>Scan your camera's QR code to get started</p>
-        <Link to="/qr" className="cta-button">Scan QR Code</Link>
-      </div>
-
-      <div className="info-section">
-        <h2>About Our Service</h2>
-        <div className="info-grid">
-          <div className="info-card">
-            <div className="info-image">
-              <img src="https://picsum.photos/300/200?grayscale" alt="Turnaround time" />
-            </div>
-            <h3>Turnaround Time</h3>
-            <p>Processing times vary based on volume. We offer rush service for C-41 film at an additional 50% per roll.</p>
+      <section className="process-section">
+        <h2>How It Works</h2>
+        <div className="process-steps">
+          <div className="process-step">
+            <div className="step-number">1</div>
+            <h3>Register Your Camera</h3>
+            <p>Scan your camera's QR code to create your account and register your device.</p>
           </div>
-          
-          <div className="info-card">
-            <div className="info-image">
-              <img src="https://picsum.photos/300/200?grayscale" alt="Film types" />
-            </div>
-            <h3>Film Types</h3>
-            <p>We process 35mm, 120, 4x5 & 8x10, and disposable cameras in color negative (C-41) and black and white.</p>
+          <div className="process-step">
+            <div className="step-number">2</div>
+            <h3>Ship Your Film</h3>
+            <p>Generate a shipping label and send us your film using our pre-paid service.</p>
           </div>
-
-          <div className="info-card">
-            <div className="info-image">
-              <img src="https://picsum.photos/300/200?grayscale" alt="Location" />
-            </div>
-            <h3>Location</h3>
-            <p>623 S 8th St, Las Vegas, NV 89101</p>
-            <p>Hours: By appointment only</p>
+          <div className="process-step">
+            <div className="step-number">3</div>
+            <h3>Track Progress</h3>
+            <p>Monitor your film's journey through our development process in real-time.</p>
+          </div>
+          <div className="process-step">
+            <div className="step-number">4</div>
+            <h3>Receive Photos</h3>
+            <p>Get notified when your photos are ready and access them digitally.</p>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section className="cta-section">
+        <div className="cta-content">
+          <h2>Ready to Develop Your Film?</h2>
+          <p>Join our community of film enthusiasts and experience professional development.</p>
+          <button onClick={handleButtonClick} className="cta-button">Start Your Journey</button>
+        </div>
+      </section>
     </div>
   );
 }

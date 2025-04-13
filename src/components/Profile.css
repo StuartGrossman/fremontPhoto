@@ -1,197 +1,372 @@
 .profile {
-  max-width: 1200px;
-  margin: 2rem auto;
+  max-width: 1400px;
+  margin: 6rem auto 2rem;
   padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.profile h1 {
-  margin: 0 0 2rem;
-  color: #333;
-  font-size: 2rem;
+.profile-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-header h1 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 2.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
 }
 
 .cameras-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 .camera-card {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .camera-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.camera-card h2 {
-  margin: 0 0 1rem;
-  color: #333;
+.camera-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.camera-header h2 {
+  margin: 0;
+  color: #1f2937;
   font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.camera-card p {
-  margin: 0.5rem 0;
-  color: #666;
-}
-
-.generate-label-button {
-  margin-top: 1rem;
-  background-color: #007bff;
-  color: white;
+.edit-name-btn {
+  background: none;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
+  color: #6b7280;
   cursor: pointer;
-  transition: background-color 0.2s;
-  width: 100%;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-.generate-label-button:hover:not(:disabled) {
-  background-color: #0056b3;
+.edit-name-btn:hover {
+  background-color: #f3f4f6;
+  color: #4b5563;
 }
 
-.generate-label-button:disabled {
-  background-color: #ccc;
+.camera-info {
+  margin-bottom: 1.5rem;
+}
+
+.camera-info p {
+  margin: 0.5rem 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.camera-info .status {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.camera-info .photos-count {
+  color: #4b5563;
+}
+
+.camera-info .tracking {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.camera-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.generate-label-btn,
+.view-label-btn {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.generate-label-btn {
+  background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%);
+  color: white;
+}
+
+.generate-label-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.generate-label-btn:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
   cursor: not-allowed;
 }
 
-.qr-code-preview {
-  margin-left: 1rem;
+.view-label-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
 }
 
-.qr-code-preview img {
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.view-label-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.camera-edit-form {
+  padding: 1rem;
+}
+
+.camera-name-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.camera-name-input:focus {
+  outline: none;
+  border-color: #4b5563;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.save-btn,
+.cancel-btn {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+.cancel-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  margin: 0 0 1.5rem;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.label-details {
+  margin: 1.5rem 0;
+}
+
+.label-details p {
+  margin: 0.75rem 0;
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.label-details strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.download-label-btn,
+.close-modal {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.download-label-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.download-label-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+.close-modal:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.25rem;
+  border-radius: 12px;
+  margin: 2rem 0;
 }
 
 .loading {
-  text-align: center;
-  color: #666;
-  font-size: 1.2rem;
-  margin: 2rem 0;
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px dashed #e5e7eb;
 }
 
 .error {
-  color: #dc3545;
-  text-align: center;
-  margin: 2rem 0;
+  color: #ef4444;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
 }
 
-.test-section {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.test-registration-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.test-registration-button:hover:not(:disabled) {
-  background-color: #45a049;
-}
-
-.test-registration-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .profile {
-    margin: 0;
-    padding: 1rem;
-    border-radius: 0;
-    min-height: 100vh;
+    margin: 5rem 1.5rem 2rem;
+    padding: 1.5rem;
   }
 
-  .profile h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+  .cameras-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile {
+    margin: 4rem 1rem 1rem;
+    padding: 1rem;
+  }
+
+  .profile-header h1 {
+    font-size: 1.75rem;
   }
 
   .cameras-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 1rem;
   }
 
   .camera-card {
     padding: 1rem;
   }
 
-  .camera-card h2 {
-    font-size: 1.3rem;
-  }
-
-  .generate-label-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  .test-section {
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .test-registration-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  .qr-code-preview {
-    margin: 1rem 0 0;
-  }
-
-  .qr-code-preview img {
-    width: 80px;
-    height: 80px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile {
-    padding: 0.8rem;
-    padding-top: 4.5rem;
-  }
-
-  .profile h1 {
+  .camera-header h2 {
     font-size: 1.25rem;
-    margin-bottom: 1rem;
   }
 
-  .camera-card h2 {
-    font-size: 1.2rem;
-  }
-
-  .camera-card p {
+  .camera-info p {
     font-size: 0.9rem;
   }
 
-  .generate-label-button,
-  .test-registration-button {
+  .generate-label-btn,
+  .view-label-btn,
+  .save-btn,
+  .cancel-btn {
     padding: 0.6rem 1rem;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
-  .qr-code-preview img {
-    width: 60px;
-    height: 60px;
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .download-label-btn,
+  .close-modal {
+    width: 100%;
   }
 } 

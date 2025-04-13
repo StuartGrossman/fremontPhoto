@@ -61,9 +61,7 @@
 }
 
 .main-content {
-  margin-top: 6rem;  /* Space for fixed navbar */
   padding: 2rem;
-  min-height: calc(100vh - 6rem);
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -99,9 +97,7 @@ body {
 .photo-gallery,
 .home,
 .test-page {
-  margin-top: 6rem;
   padding: 2rem;
-  min-height: calc(100vh - 6rem);
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;

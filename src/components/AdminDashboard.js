@@ -305,41 +305,43 @@ function AdminDashboard() {
                   {qr.photos && qr.photos.length > 0 && (
                     <div className="photo-gallery">
                       <h4>Uploaded Photos ({qr.photos.length})</h4>
-                      <div className="photo-carousel">
-                        {qr.photos.map((photoUrl, index) => (
-                          <div key={index} className="photo-thumbnail">
-                            <img 
-                              src={photoUrl} 
-                              alt={`Photo ${index + 1}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                window.open(photoUrl, '_blank');
-                              }}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                      <div className="carousel-controls">
-                        <button 
-                          className="carousel-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
-                            carousel.scrollBy({ left: -200, behavior: 'smooth' });
-                          }}
-                        >
-                          ←
-                        </button>
-                        <button 
-                          className="carousel-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
-                            carousel.scrollBy({ left: 200, behavior: 'smooth' });
-                          }}
-                        >
-                          →
-                        </button>
+                      <div className="photo-gallery-container">
+                        <div className="photo-carousel">
+                          {qr.photos.map((photoUrl, index) => (
+                            <div key={index} className="photo-thumbnail">
+                              <img 
+                                src={photoUrl} 
+                                alt={`Photo ${index + 1}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  window.open(photoUrl, '_blank');
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        <div className="carousel-controls">
+                          <button 
+                            className="carousel-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
+                              carousel.scrollBy({ left: -200, behavior: 'smooth' });
+                            }}
+                          >
+                            ←
+                          </button>
+                          <button 
+                            className="carousel-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const carousel = e.target.closest('.photo-gallery').querySelector('.photo-carousel');
+                              carousel.scrollBy({ left: 200, behavior: 'smooth' });
+                            }}
+                          >
+                            →
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
