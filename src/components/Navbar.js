@@ -41,10 +41,12 @@ function Navbar() {
           )}
         </div>
         <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          <li className="nav-item">
-            <Link to="/" className="nav-links" onClick={() => setIsMenuOpen(false)}>Home</Link>
-          </li>
-          {currentUser && (
+          {!isAdmin && (
+            <li className="nav-item">
+              <Link to="/" className="nav-links" onClick={() => setIsMenuOpen(false)}>Home</Link>
+            </li>
+          )}
+          {currentUser && !isAdmin && (
             <li className="nav-item">
               <Link to="/profile" className="nav-links" onClick={() => setIsMenuOpen(false)}>Profile</Link>
             </li>
@@ -53,9 +55,6 @@ function Navbar() {
             <>
               <li className="nav-item">
                 <Link to="/admin" className="nav-links" onClick={() => setIsMenuOpen(false)}>Admin Dashboard</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/test" className="nav-links" onClick={() => setIsMenuOpen(false)}>Test Page</Link>
               </li>
             </>
           )}
