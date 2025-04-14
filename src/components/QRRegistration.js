@@ -17,9 +17,13 @@ function QRRegistration() {
   useEffect(() => {
     const registerCamera = async () => {
       try {
-        console.log('Starting camera registration process...');
+        console.log('=== Starting Camera Registration Process ===');
         console.log('QR Code ID:', id);
-        console.log('Current User:', currentUser?.uid);
+        console.log('Current User:', {
+          uid: currentUser?.uid,
+          email: currentUser?.email,
+          isLoggedIn: !!currentUser
+        });
 
         const qrCodeRef = doc(db, 'qrCodes', id);
         console.log('Fetching QR code document...');
@@ -33,7 +37,13 @@ function QRRegistration() {
         }
 
         const qrCodeData = qrCodeDoc.data();
-        console.log('QR Code Data:', qrCodeData);
+        console.log('Current QR Code Data:', {
+          id: qrCodeData.id,
+          userId: qrCodeData.userId,
+          status: qrCodeData.status,
+          albumName: qrCodeData.albumName,
+          createdAt: qrCodeData.createdAt
+        });
         
         // If user is not logged in, show login prompt
         if (!currentUser) {
@@ -65,6 +75,7 @@ function QRRegistration() {
             await updateDoc(userProfileRef, {
               cameras: [...cameras, newCamera]
             });
+            console.log('User profile updated successfully');
           } else {
             console.log('Camera already exists in user profile');
           }
@@ -84,6 +95,7 @@ function QRRegistration() {
           };
           console.log('New user profile data:', newUserProfile);
           await setDoc(userProfileRef, newUserProfile);
+          console.log('New user profile created successfully');
         }
 
         // Try to update the QR code, but don't let it block the success state
@@ -92,19 +104,34 @@ function QRRegistration() {
             console.log('Updating QR code with user ID...');
             const updateData = {
               userId: currentUser.uid,
-              status: 'Registered'
+              status: 'Registered',
+              updatedAt: new Date(),
+              albumName: qrCodeData.albumName || `Camera ${qrCodeData.id}`
             };
             console.log('QR code update data:', updateData);
             await updateDoc(qrCodeRef, updateData);
+            console.log('QR code updated successfully');
+            
+            // Verify the update
+            const updatedQrCodeDoc = await getDoc(qrCodeRef);
+            const updatedQrCodeData = updatedQrCodeDoc.data();
+            console.log('Updated QR Code Data:', {
+              id: updatedQrCodeData.id,
+              userId: updatedQrCodeData.userId,
+              status: updatedQrCodeData.status,
+              albumName: updatedQrCodeData.albumName,
+              updatedAt: updatedQrCodeData.updatedAt
+            });
           } else {
             console.log('QR code already has a user:', qrCodeData.userId);
           }
         } catch (qrError) {
-          console.warn('QR code update failed, but continuing:', qrError);
+          console.error('QR code update failed:', qrError);
           // Don't set error state here, as the registration was still successful
+          // The user can still access their camera through their profile
         }
 
-        console.log('Registration successful, redirecting to profile...');
+        console.log('=== Registration Process Complete ===');
         setSuccess(true);
         setLoading(false);
         // Add a small delay before redirect to show success message

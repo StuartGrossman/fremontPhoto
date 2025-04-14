@@ -11,10 +11,18 @@
 ## Styling Patterns
 - Button Styling
   - Gradient backgrounds for primary actions
+    - Blue gradient (#4a90e2 to #5c6bc0) for primary actions
+    - Darker blue gradient (#3b82f6 to #4f46e5) for hover states
   - Hover effects with transform and shadow
+    - translateY(-2px) transform
+    - Box shadow enhancement
   - Consistent padding and border radius
+    - 0.5rem 1rem padding for desktop
+    - 0.75rem 1.5rem padding for mobile
+    - 8px border radius
   - Mobile-friendly touch targets
   - Disabled state styling
+  - Icon integration with flex layout and gap spacing
 
 - Form Elements
   - Consistent input styling

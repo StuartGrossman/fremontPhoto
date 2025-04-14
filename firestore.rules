@@ -25,12 +25,27 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.uid == userId;
     }
     
-    // Allow public read access to QR codes
+    // QR codes rules
     match /qrCodes/{qrCodeId} {
-      allow read: if request.auth != null;
+      // Allow public read access
+      allow read: if true;
+      
+      // Only admins can create new QR codes
       allow create: if isAdmin();
+      
+      // Allow updates if:
+      // 1. User is admin
+      // 2. OR user is authenticated and either:
+      //    a. QR code has no user yet and user is setting themselves as owner
+      //    b. OR user is the owner
+      //    c. OR user is authenticated and only updating albumName/updatedAt
       allow update: if isAdmin() || 
-        (request.auth != null && resource.data.userId == request.auth.uid);
+        (request.auth != null && 
+          ((!resource.data.userId && request.resource.data.userId == request.auth.uid) || 
+           (resource.data.userId == request.auth.uid) ||
+           (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['albumName', 'updatedAt']))));
+      
+      // Only admins can delete QR codes
       allow delete: if isAdmin();
     }
 
@@ -41,7 +56,7 @@ service cloud.firestore {
 
     // Restrict admin-related data to admin users only
     match /admin/{document=**} {
-      allow read, write: if request.auth != null && request.auth.token.admin == true;
+      allow read, write: if isAdmin();
     }
   }
 } 

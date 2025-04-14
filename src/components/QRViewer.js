@@ -59,10 +59,15 @@ function QRViewer() {
         if (!isAdmin) {
           // Update the QR code with the user's ID if it doesn't have one
           if (!qrCodeData.userId) {
-            await updateDoc(qrCodeRef, {
+            console.log('Updating QR code with user ID...');
+            const updateData = {
               userId: currentUser.uid,
-              status: 'Registered'
-            });
+              status: 'Registered',
+              updatedAt: new Date()
+            };
+            console.log('QR code update data:', updateData);
+            await updateDoc(qrCodeRef, updateData);
+            console.log('QR code updated successfully');
             qrCodeData.userId = currentUser.uid;
             qrCodeData.status = 'Registered';
           }

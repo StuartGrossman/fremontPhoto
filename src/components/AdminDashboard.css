@@ -417,6 +417,8 @@
   .admin-dashboard {
     margin: 4.5rem auto 1rem;
     padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .dashboard-header {
@@ -424,6 +426,7 @@
     gap: 1rem;
     align-items: flex-start;
     margin-bottom: 2rem;
+    width: 100%;
   }
 
   .dashboard-controls {
@@ -434,31 +437,63 @@
 
   .month-filter {
     width: 100%;
+    box-sizing: border-box;
   }
 
   .generate-qr-btn {
     width: 100%;
+    box-sizing: border-box;
   }
 
   .qr-codes-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
   }
 
   .qr-code-card {
-    padding: 1.25rem;
+    padding: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .qr-code-image {
+    padding: 1rem;
+  }
+
+  .qr-code-image svg {
+    max-width: 200px;
+    height: auto;
   }
 
   .qr-code-actions {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .download-btn, .delete-btn {
     width: 100%;
+    box-sizing: border-box;
   }
 
   .modal {
     width: 95%;
     padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .photo-thumbnail {
+    width: 80px;
+    height: 80px;
+  }
+
+  .carousel-btn {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
   }
 }
 
@@ -466,5 +501,18 @@
   .admin-dashboard {
     margin: 4rem auto 0.5rem;
     padding: 0.75rem;
+  }
+
+  .qr-code-card {
+    padding: 1.25rem;
+  }
+
+  .qr-code-image {
+    padding: 0.75rem;
+  }
+
+  .photo-thumbnail {
+    width: 64px;
+    height: 64px;
   }
 } 

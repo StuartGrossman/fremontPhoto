@@ -46,17 +46,27 @@ function Navbar() {
         </div>
         <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
           {isAdmin && (
-            <>
-              <li className="nav-item">
-                <Link to="/admin" className="nav-links" onClick={() => setIsMenuOpen(false)}>Admin Dashboard</Link>
-              </li>
-            </>
+            <li className="nav-item">
+              <Link to="/admin" className="nav-links" onClick={() => setIsMenuOpen(false)}>Admin Dashboard</Link>
+            </li>
           )}
           <li className="nav-item">
             {currentUser ? (
-              <button onClick={handleLogout} className="nav-links">Logout</button>
+              <button 
+                className="nav-links"
+                onClick={handleLogout}
+              >
+                <i className="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+              </button>
             ) : (
-              <button onClick={handleLogin} className="nav-links">Login with Google</button>
+              <button 
+                className="nav-links"
+                onClick={handleLogin}
+              >
+                <i className="fab fa-google"></i>
+                <span>Login with Google</span>
+              </button>
             )}
           </li>
         </ul>

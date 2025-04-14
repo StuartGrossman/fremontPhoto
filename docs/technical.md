@@ -82,6 +82,33 @@ graph TD
     D -->|Delete| E[Remove Photo]
 ```
 
+## Component Styling
+- Navigation
+  - Responsive navbar with mobile menu
+  - Consistent button styling
+    - Gradient backgrounds
+    - Hover effects
+    - Icon integration
+  - Mobile-first approach
+    - Centered content
+    - Touch-friendly targets
+    - Proper spacing
+
+- Buttons
+  - Primary Actions
+    - Blue gradient background
+    - White text
+    - Icon + text layout
+    - Responsive padding
+  - Interactive States
+    - Hover: transform + shadow
+    - Active: remove transform
+    - Disabled: opacity + cursor
+  - Mobile Considerations
+    - Larger touch targets
+    - Centered content
+    - Consistent spacing
+
 ## Security Rules
 
 ### Firestore Rules

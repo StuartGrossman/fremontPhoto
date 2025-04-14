@@ -108,12 +108,15 @@ function AdminDashboard() {
         createdBy: currentUser.uid,
         status: 'Active',
         userId: null,
-        id: null // This will be updated with the document ID after creation
+        id: null, // This will be updated with the document ID after creation
+        albumName: null,
+        updatedAt: null
       });
 
       // Update the document with its own ID
       await updateDoc(newQrDoc, {
-        id: newQrDoc.id
+        id: newQrDoc.id,
+        updatedAt: serverTimestamp()
       });
 
       // Add the new QR code to the local state
@@ -124,7 +127,9 @@ function AdminDashboard() {
         shippingLabel: null,
         createdBy: currentUser.uid,
         status: 'Active',
-        userId: null
+        userId: null,
+        albumName: null,
+        updatedAt: new Date()
       }, ...prev]);
 
       // Navigate to the new QR code

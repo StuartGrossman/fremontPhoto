@@ -127,6 +127,9 @@ function Profile() {
 
   const handleRenameCamera = async (cameraId, newName) => {
     try {
+      console.log('Starting camera rename:', { cameraId, newName });
+      
+      // Update user's profile
       const userProfileRef = doc(db, 'users', currentUser.uid);
       const userProfileDoc = await getDoc(userProfileRef);
       
@@ -139,7 +142,24 @@ function Profile() {
           return camera;
         });
         
+        console.log('Updating user profile with new camera name');
         await updateDoc(userProfileRef, { cameras: updatedCameras });
+        
+        // Update the QR code document
+        try {
+          console.log('Updating QR code document with new album name');
+          const qrCodeRef = doc(db, 'qrCodes', cameraId);
+          await updateDoc(qrCodeRef, {
+            albumName: newName,
+            updatedAt: new Date()
+          });
+          console.log('QR code document updated successfully');
+        } catch (qrError) {
+          console.error('QR code update failed:', qrError);
+          // Don't set error state here, as the user profile update was successful
+        }
+        
+        // Update local state
         setCameras(prevCameras => prevCameras.map(camera => {
           if (camera.id === cameraId) {
             return { ...camera, name: newName };
@@ -262,6 +282,7 @@ function Profile() {
                     }}
                   >
                     <i className="fas fa-edit"></i>
+                    <span>Edit Name</span>
                   </button>
                 </div>
                 <div className="camera-info">
@@ -291,7 +312,7 @@ function Profile() {
                       }}
                       disabled={generatingLabel === camera.id}
                     >
-                      {generatingLabel === camera.id ? 'Generating...' : 'Ready to Ship'}
+                      {generatingLabel === camera.id ? 'Generating...' : 'Ready to Ship?'}
                     </button>
                   )}
                 </div>
