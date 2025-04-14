@@ -289,7 +289,7 @@ function AdminDashboard() {
                   <div className="qr-code-image">
                     <QRCodeSVG 
                       id={`qr-${qr.id}`}
-                      value={`${window.location.origin}/qr/${qr.id}`}
+                      value={`${window.location.origin}/register/${qr.id}`}
                       size={150}
                       level="H"
                       includeMargin={true}
